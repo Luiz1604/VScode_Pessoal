@@ -21,6 +21,31 @@ if conta == False:
 else:
     print("\nBem Vindo!")
 
+def depositar(saldo, hist):
+    dep = float(input("\nDigite o valor que você deseja depositar: "))
+
+    while dep < 0:
+        dep = float(input("Valor inválido, redigite: "))
+
+    saldo += dep
+    hist.append(dep) #append adiciona um item a lista
+    return saldo
+
+def sacar(saldo, hist):
+    sac = float(input("\nDigite o valor que voce deseja sacar: "))
+
+    while True:
+        if sac < 0:
+            sac = float(input("Valor inválido, redigite: "))
+        elif sac > saldo:
+            sac = float(input("Saldo insufuciente, redigite: "))
+        else:
+            break
+
+    saldo -= sac
+    hist.append(-sac) #append adiciona um item a lista
+    return saldo
+
 while conta: #Vem como True aoutomáticamente
     opcao = input ("\nDigite a opção: \n1 - Ver saldo  \n2 - Depositar  \n3 - Sacar  \n4 - Histórico  \n5 - Sair: ")
     match opcao:
@@ -28,28 +53,10 @@ while conta: #Vem como True aoutomáticamente
             print(f"\nSeu saldo é de R$ {saldo:.2f}") #Lembrar de colocar o f
 
         case "2":
-            dep = float(input("\nDigite o valor que você deseja depositar: "))
-
-            while dep < 0:
-                dep = float(input("Valor inválido, redigite: "))
-
-            saldo += dep
-            hist.append(dep) #append adiciona um item a lista
+            saldo = depositar(saldo, hist)
 
         case "3":
-            sac = float(input("\nDigite o valor que voce deseja sacar: "))
-
-            while sac < 0:
-                sac = float(input("Valor inválido, redigite: "))
-
-            while sac > saldo or sac < 0:
-                if sac > saldo:
-                    sac = float(input("Saldo indufuciente, redigite: "))
-                if sac < 0:
-                    sac = float(input("Valor inválido, redigite: "))
-
-            saldo -= sac
-            hist.append(-sac) #append adiciona um item a lista
+            saldo = sacar(saldo, hist)
 
         case "4":
             print("\n-- Histórico de ações --")
